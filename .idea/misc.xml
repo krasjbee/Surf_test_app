@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/krasjbee/AndroidStudioProjects/Surf_test_app/app/src/main/res/drawable/bg_searchview.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/krasjbee/AndroidStudioProjects/Surf_test_app/app/src/main/res/drawable/bt_fav.xml" value="0.3614583333333333" />
         <entry key="..\:/Users/krasjbee/AndroidStudioProjects/Surf_test_app/app/src/main/res/drawable/ic_heart.xml" value="0.20260416666666667" />
-        <entry key="..\:/Users/krasjbee/AndroidStudioProjects/Surf_test_app/app/src/main/res/layout/activity_main.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/krasjbee/AndroidStudioProjects/Surf_test_app/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/krasjbee/AndroidStudioProjects/Surf_test_app/app/src/main/res/layout/card_film.xml" value="0.3411458333333333" />
         <entry key="..\:/Users/krasjbee/AndroidStudioProjects/Surf_test_app/app/src/main/res/layout/film_card.xml" value="0.2037037037037037" />
       </map>
