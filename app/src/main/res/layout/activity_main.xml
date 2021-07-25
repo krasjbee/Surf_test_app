@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1C1D1F"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:backgroundTint="#1C1D1F"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,9 +30,10 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/sr_container"
+        tools:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/sr_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -41,5 +44,44 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/card_film" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <ImageView
+        android:id="@+id/iv_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/tv_error_request"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/ic_alert_triangle" />
+
+    <TextView
+        android:id="@+id/tv_error_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wrong_request_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_alert" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_request_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="iv_alert,tv_error_request" />
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toolbar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Surf_test_app</string>
+    <string name="wrong_request_text">Нам не удалось обработаь ваш запросю попробуйте еще раз</string>
 </resources>
