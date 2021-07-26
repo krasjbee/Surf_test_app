@@ -1,9 +1,9 @@
-package com.example.surf_test_app
+package com.example.surf_test_app.model
 
 
 import com.google.gson.annotations.SerializedName
 
-data class SearchResponse(
+data class DiscoverResponse(
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")

@@ -1,4 +1,4 @@
-package com.example.surf_test_app
+package com.example.surf_test_app.model
 
 
 import com.google.gson.annotations.SerializedName
