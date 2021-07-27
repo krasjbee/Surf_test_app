@@ -1,4 +1,4 @@
-package com.example.surf_test_app
+package com.example.surf_test_app.presentation
 
 import android.content.res.Configuration
 import android.os.Bundle

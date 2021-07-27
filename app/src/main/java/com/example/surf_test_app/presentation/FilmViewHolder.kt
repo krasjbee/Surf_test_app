@@ -1,4 +1,4 @@
-package com.example.surf_test_app
+package com.example.surf_test_app.presentation
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

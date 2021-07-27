@@ -1,4 +1,4 @@
-package com.example.surf_test_app
+package com.example.surf_test_app.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

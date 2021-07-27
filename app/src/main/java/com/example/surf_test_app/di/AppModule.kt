@@ -2,6 +2,8 @@ package com.example.surf_test_app.di
 
 import com.example.surf_test_app.BuildConfig
 import com.example.surf_test_app.TMDbAPI
+import com.example.surf_test_app.repository.FilmRepositoryImp
+import com.example.surf_test_app.repository.FilmsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,7 +54,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit = retrofit2.Retrofit.Builder()
+    fun provideRetrofit(): Retrofit = Retrofit.Builder()
         .client(client)
         .baseUrl("https://api.themoviedb.org/3/")
         .addConverterFactory(GsonConverterFactory.create())
@@ -60,5 +62,11 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideApi(retrofit: retrofit2.Retrofit): TMDbAPI = retrofit.create(TMDbAPI::class.java)
+    fun provideApi(retrofit: Retrofit): TMDbAPI = retrofit.create(TMDbAPI::class.java)
+
+    @Provides
+    @Singleton
+    fun provideFilmRepository(api: TMDbAPI): FilmsRepository = FilmRepositoryImp(api)
+
+
 }
