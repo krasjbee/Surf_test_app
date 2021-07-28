@@ -1,6 +1,6 @@
 package com.example.surf_test_app.repository
 
-import com.example.surf_test_app.TMDbAPI
+import com.example.surf_test_app.api.TMDbAPI
 import com.example.surf_test_app.model.DiscoverResponse
 import com.example.surf_test_app.model.SearchResponse
 import retrofit2.Response

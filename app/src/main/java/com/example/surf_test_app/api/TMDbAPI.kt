@@ -1,4 +1,4 @@
-package com.example.surf_test_app
+package com.example.surf_test_app.api
 
 import com.example.surf_test_app.model.DiscoverResponse
 import com.example.surf_test_app.model.SearchResponse

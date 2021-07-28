@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.surf_test_app.FilmsInteractor
-import com.example.surf_test_app.Resource
-import com.example.surf_test_app.State
+import com.example.surf_test_app.domain.FilmsInteractor
 import com.example.surf_test_app.model.DiscoverResponse
 import com.example.surf_test_app.model.FilmResult
 import com.example.surf_test_app.model.SearchResponse
+import com.example.surf_test_app.util.Resource
+import com.example.surf_test_app.util.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

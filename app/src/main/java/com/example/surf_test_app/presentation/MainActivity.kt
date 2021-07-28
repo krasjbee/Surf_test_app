@@ -10,8 +10,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.surf_test_app.State
+import com.example.surf_test_app.R
 import com.example.surf_test_app.databinding.ActivityMainBinding
+import com.example.surf_test_app.util.State
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -77,23 +78,38 @@ class MainActivity : AppCompatActivity() {
         binding.pbLoading.isVisible = false
         binding.rvFilmList.isVisible = true
         binding.groupRequestError.isVisible = false
+        binding.groupError.isVisible = false
+
     }
 
     private fun showWrongRequest() {
         binding.pbLoading.isVisible = false
         binding.rvFilmList.isVisible = false
         binding.groupRequestError.isVisible = true
+        binding.groupError.isVisible = false
+
+        if (binding.svSearch.query.isNotBlank()) {
+            val query = StringBuilder("\"").append(binding.svSearch.query).append("\"").toString()
+            val text = getString(R.string.wrong_request_text, query)
+            binding.tvRequestError.text = text
+        } else {
+            val text = getString(R.string.wrong_request_text, "")
+            binding.tvRequestError.text = text
+        }
     }
 
     private fun showError() {
         binding.pbLoading.isVisible = false
         binding.rvFilmList.isVisible = false
-        binding.groupRequestError.isVisible = true
+        binding.groupRequestError.isVisible = false
+        binding.groupError.isVisible = true
+
     }
 
     private fun showLoading() {
         binding.pbLoading.isVisible = true
         binding.rvFilmList.isVisible = false
         binding.groupRequestError.isVisible = false
+        binding.groupError.isVisible = false
     }
 }

@@ -1,8 +1,8 @@
 package com.example.surf_test_app.di
 
 import com.example.surf_test_app.BuildConfig
-import com.example.surf_test_app.FilmsInteractor
-import com.example.surf_test_app.TMDbAPI
+import com.example.surf_test_app.api.TMDbAPI
+import com.example.surf_test_app.domain.FilmsInteractor
 import com.example.surf_test_app.repository.FilmRepositoryImp
 import com.example.surf_test_app.repository.FilmsRepository
 import dagger.Module

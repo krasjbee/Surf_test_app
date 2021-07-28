@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Surf_test_app</string>
-    <string name="wrong_request_text">Нам не удалось обработаь ваш запросю попробуйте еще раз</string>
+    <string name="error_text">Нам не удалось обработать ваш запрос. попробуйте еще раз</string>
     <string name="search_hint">Поиск фильма по названию</string>
+    <string name="wrong_request_text">По запросу ничего %1$s не найдено</string>
 </resources>
