@@ -54,15 +54,13 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit = Retrofit.Builder()
+    fun provideApi(): TMDbAPI = Retrofit.Builder()
         .client(client)
         .baseUrl("https://api.themoviedb.org/3/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+        .create(TMDbAPI::class.java)
 
-    @Singleton
-    @Provides
-    fun provideApi(retrofit: Retrofit): TMDbAPI = retrofit.create(TMDbAPI::class.java)
 
     @Provides
     @Singleton

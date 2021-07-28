@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,8 +37,25 @@ class MainActivity : AppCompatActivity() {
             this.layoutManager = layoutManager
         }
 
-        val observer = viewModel.liveData.observe(this) {
+        viewModel.filmList.observe(this) {
             adapter.submitList(it)
+        }
+
+        binding.svSearch.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    //TODO add progress bar, hide keyboard
+                    viewModel.searchMovies(query ?: "")
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean = false
+            }
+        )
+
+        binding.srContainer.setOnRefreshListener {
+            viewModel.discoverFilms()
+            binding.srContainer.isRefreshing = false
         }
     }
 }
