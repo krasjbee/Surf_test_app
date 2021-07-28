@@ -1,6 +1,7 @@
 package com.example.surf_test_app.di
 
 import com.example.surf_test_app.BuildConfig
+import com.example.surf_test_app.FilmsInteractor
 import com.example.surf_test_app.TMDbAPI
 import com.example.surf_test_app.repository.FilmRepositoryImp
 import com.example.surf_test_app.repository.FilmsRepository
@@ -66,5 +67,7 @@ class AppModule {
     @Singleton
     fun provideFilmRepository(api: TMDbAPI): FilmsRepository = FilmRepositoryImp(api)
 
+    @Provides
+    fun provideFilmsInteractor(filmRepository: FilmsRepository) = FilmsInteractor(filmRepository)
 
 }

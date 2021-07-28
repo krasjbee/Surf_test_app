@@ -6,9 +6,11 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.surf_test_app.State
 import com.example.surf_test_app.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,9 +38,17 @@ class MainActivity : AppCompatActivity() {
             this.adapter = adapter
             this.layoutManager = layoutManager
         }
+        viewModel.filmList.observe(this) { filmList ->
+            adapter.submitList(filmList)
+        }
 
-        viewModel.filmList.observe(this) {
-            adapter.submitList(it)
+        viewModel.state.observe(this) { state ->
+            when (state) {
+                is State.Loading -> showLoading()
+                is State.Error -> showError()
+                is State.WrongRequest -> showWrongRequest()
+                is State.Success -> showList()
+            }
         }
 
         binding.svSearch.setOnQueryTextListener(
@@ -54,8 +64,36 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.srContainer.setOnRefreshListener {
-            viewModel.discoverFilms()
+            if (binding.svSearch.query.isNotBlank()) {
+                viewModel.searchMovies(binding.svSearch.query.toString())
+            } else {
+                viewModel.discoverFilms()
+            }
             binding.srContainer.isRefreshing = false
         }
+    }
+
+    private fun showList() {
+        binding.pbLoading.isVisible = false
+        binding.rvFilmList.isVisible = true
+        binding.groupRequestError.isVisible = false
+    }
+
+    private fun showWrongRequest() {
+        binding.pbLoading.isVisible = false
+        binding.rvFilmList.isVisible = false
+        binding.groupRequestError.isVisible = true
+    }
+
+    private fun showError() {
+        binding.pbLoading.isVisible = false
+        binding.rvFilmList.isVisible = false
+        binding.groupRequestError.isVisible = true
+    }
+
+    private fun showLoading() {
+        binding.pbLoading.isVisible = true
+        binding.rvFilmList.isVisible = false
+        binding.groupRequestError.isVisible = false
     }
 }
