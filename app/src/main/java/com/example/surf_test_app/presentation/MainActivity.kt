@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         @SuppressLint("ShowToast")
         snackbar = Snackbar.make(
             binding.rvFilmList,
-            "Проверьте ваше соеденение с интернетом и попробуйте еще раз",
+            getString(R.string.error_check_internet),
             Snackbar.LENGTH_INDEFINITE
         )
 
@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity() {
         binding.svSearch.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    //TODO add progress bar, hide keyboard
                     viewModel.searchMovies(query ?: "")
                     return true
                 }
@@ -105,8 +104,8 @@ class MainActivity : AppCompatActivity() {
         binding.rvFilmList.isVisible = true
         binding.groupRequestError.isVisible = false
         binding.groupError.isVisible = false
-        snackbar.dismiss()
         binding.pbTopLoading.isVisible = false
+        snackbar.dismiss()
 
     }
 
@@ -156,7 +155,4 @@ class MainActivity : AppCompatActivity() {
             binding.pbTopLoading.isVisible = true
         }
     }
-
-    //Todo favourites integration ,floating action button
-
 }

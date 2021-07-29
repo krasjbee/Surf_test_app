@@ -34,30 +34,31 @@
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="17dp"
+            android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:maxLines="2"
             app:layout_constraintStart_toEndOf="@id/poster_guideline"
-            app:layout_constraintStart_toStartOf="@+id/tv_film_details"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="193dp"
             android:textAppearance="@style/TitleText"
             tools:text="@tools:sample/lorem/random" />
 
         <TextView
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
             android:id="@+id/tv_film_details"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             app:layout_constraintBottom_toTopOf="@id/guideline_calendar_heart"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/poster_guideline"
             app:layout_constraintTop_toBottomOf="@id/tv_film_title"
+            app:layout_constraintWidth_min="160dp"
             app:layout_constraintWidth_max="193dp"
             android:textAppearance="@style/DetailsText"
             tools:text="@tools:sample/lorem/random" />
+
 
         <ImageView
             android:id="@+id/iv_calendar"
@@ -65,10 +66,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
             android:layout_marginBottom="12dp"
+            android:layout_marginStart="16dp"
             android:src="@drawable/ic_calendar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_film_details"
-            app:layout_constraintTop_toBottomOf="@id/guideline_calendar_heart" />
+            app:layout_constraintStart_toEndOf="@id/poster_guideline"
+            app:layout_constraintTop_toBottomOf="@id/guideline_calendar_heart"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -87,17 +90,17 @@
             android:id="@+id/like"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/favourite_selector"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:checked="false"
-            android:textOff=" "
-            android:textOn=" "
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="11dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="12dp"
+            android:background="@drawable/favourite_selector"
+            android:checked="false"
+            android:textOff=" "
+            android:textOn=" "
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline_calendar_heart"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription,TouchTargetSizeCheck" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/poster_guideline"
@@ -112,9 +115,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="147dp" />
-
-        <!--todo Date text-->
-        <!--FIXME try using real data , fix afterwards-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

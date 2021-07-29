@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <!--todo:rework toolbar-->
+
         <androidx.appcompat.widget.SearchView
             android:imeOptions="actionDone"
             android:id="@+id/sv_search"
@@ -68,14 +68,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/ic_alert_triangle" />
+        app:srcCompat="@drawable/ic_alert_triangle"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/tv_error"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="56dp"
         android:text="@string/error_text"
         android:textColor="#B4B4B4"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,6 +102,8 @@
         android:layout_height="wrap_content"
         android:text="@string/wrong_request_text"
         android:textColor="#B4B4B4"
+        android:layout_marginStart="62dp"
+        android:layout_marginEnd="62dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,6 +119,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_refresh"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_baseline_refresh_24"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="ContentDescription" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group_request_error"

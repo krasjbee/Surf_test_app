@@ -22,18 +22,19 @@ class MainActivityViewModel @Inject constructor(
     private val favouriteRepository: FavoritesRepository
 ) :
     ViewModel() {
+    private var fetchedList: List<FilmResult> = emptyList()
     private val _filmList: MutableLiveData<List<FilmResult>> = MutableLiveData(emptyList())
     val filmList: LiveData<List<FilmResult>> = _filmList
 
     private val _state: MutableLiveData<State> = MutableLiveData(State.Loading)
     val state: LiveData<State> = _state
 
+
     init {
         discoverFilms()
     }
 
     fun searchMovies(query: String) {
-        //todo check it
         if (!_filmList.value.isNullOrEmpty()) {
             val filtredList = _filmList.value!!.filter {
                 it.title.lowercase(Locale.getDefault())
@@ -54,14 +55,8 @@ class MainActivityViewModel @Inject constructor(
                     } else {
                         _state.postValue(State.Success)
                         //Merge with favourites
-                        val fetchedList = searchResponse.filmResults
-                        val favouriteIdsList = favouriteRepository.getSharedFavourites().toList()
-                        fetchedList.forEach { film ->
-                            if (favouriteIdsList.contains(film.id.toString())) {
-                                film.isFavorite = true
-                            }
-                        }
-                        _filmList.postValue(fetchedList)
+                        fetchedList = searchResponse.filmResults
+                        mergeWithFavourites()
                     }
                 }
                 is Resource.RequestError -> _state.postValue(State.WrongRequest)
@@ -83,14 +78,8 @@ class MainActivityViewModel @Inject constructor(
                     } else {
                         _state.postValue(State.Success)
                         //Merge with favourites
-                        val fetchedList = discoverResponse.filmResults
-                        val favouriteIdsList = favouriteRepository.getSharedFavourites().toList()
-                        fetchedList.forEach { film ->
-                            if (favouriteIdsList.contains(film.id.toString())) {
-                                film.isFavorite = true
-                            }
-                        }
-                        _filmList.postValue(fetchedList)
+                        fetchedList = discoverResponse.filmResults
+                        mergeWithFavourites()
                     }
                 }
                 is Resource.RequestError -> _state.postValue(State.WrongRequest)
@@ -99,12 +88,23 @@ class MainActivityViewModel @Inject constructor(
         }
     }
 
+    private fun mergeWithFavourites() {
+        val favouriteIdsList = favouriteRepository.getSharedFavourites().toList()
+        fetchedList.forEach { film ->
+            if (favouriteIdsList.contains(film.id.toString())) {
+                film.isFavorite = true
+            }
+        }
+        _filmList.postValue(fetchedList)
+    }
 
     fun setFavourite(id: String) {
         favouriteRepository.addSharedFavourite(id)
+        mergeWithFavourites()
     }
 
     fun removeFavourite(id: String) {
         favouriteRepository.deleteSharedFavourite(id)
+        mergeWithFavourites()
     }
 }

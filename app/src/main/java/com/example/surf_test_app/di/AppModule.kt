@@ -32,7 +32,7 @@ class AppModule {
 
     private val authInterceptor = Interceptor { chain ->
         var original = chain.request()
-        //fixme add api key to build params
+        //todo add api key to build params
         val newUrl = chain.request().url.newBuilder()
             .addQueryParameter(
                 "api_key",
