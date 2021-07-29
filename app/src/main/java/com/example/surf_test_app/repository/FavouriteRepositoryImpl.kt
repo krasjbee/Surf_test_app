@@ -12,4 +12,16 @@ class FavouriteRepositoryImpl @Inject constructor(private val dao: FavouriteDao)
     override suspend fun deleteFavourite(film: FilmResult) = dao.delete(film)
 
     override suspend fun addFavourite(film: FilmResult) = dao.insertFilm(film)
+
+    override fun getSharedFavourites(): Set<String> {
+        return emptySet()
+    }
+
+    override fun deleteSharedFavourite(filmId: String) {
+
+    }
+
+    override fun addSharedFavourite(filmId: String) {
+
+    }
 }

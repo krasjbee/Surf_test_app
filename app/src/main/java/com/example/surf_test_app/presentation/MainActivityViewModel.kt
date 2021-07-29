@@ -52,9 +52,16 @@ class MainActivityViewModel @Inject constructor(
                     if (searchResponse.totalResults == 0) {
                         _state.postValue(State.WrongRequest)
                     } else {
-                        //todo check it onw more time
                         _state.postValue(State.Success)
-                        _filmList.postValue(searchResponse.filmResults)
+                        //Merge with favourites
+                        val fetchedList = searchResponse.filmResults
+                        val favouriteIdsList = favouriteRepository.getSharedFavourites().toList()
+                        fetchedList.forEach { film ->
+                            if (favouriteIdsList.contains(film.id.toString())) {
+                                film.isFavorite = true
+                            }
+                        }
+                        _filmList.postValue(fetchedList)
                     }
                 }
                 is Resource.RequestError -> _state.postValue(State.WrongRequest)
@@ -75,7 +82,15 @@ class MainActivityViewModel @Inject constructor(
                         _state.postValue(State.WrongRequest)
                     } else {
                         _state.postValue(State.Success)
-                        _filmList.postValue(discoverResponse.filmResults)
+                        //Merge with favourites
+                        val fetchedList = discoverResponse.filmResults
+                        val favouriteIdsList = favouriteRepository.getSharedFavourites().toList()
+                        fetchedList.forEach { film ->
+                            if (favouriteIdsList.contains(film.id.toString())) {
+                                film.isFavorite = true
+                            }
+                        }
+                        _filmList.postValue(fetchedList)
                     }
                 }
                 is Resource.RequestError -> _state.postValue(State.WrongRequest)
@@ -84,11 +99,12 @@ class MainActivityViewModel @Inject constructor(
         }
     }
 
-    fun getFavourites() {
-        viewModelScope.launch {
-            val favouriteList = favouriteRepository.getFavorites().map { it.id }
-            val idsList = _filmList.value?.map { it.id }
 
-        }
+    fun setFavourite(id: String) {
+        favouriteRepository.addSharedFavourite(id)
+    }
+
+    fun removeFavourite(id: String) {
+        favouriteRepository.deleteSharedFavourite(id)
     }
 }

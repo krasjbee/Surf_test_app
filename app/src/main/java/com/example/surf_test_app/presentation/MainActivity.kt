@@ -45,9 +45,21 @@ class MainActivity : AppCompatActivity() {
             } else {
                 GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
             }
-        val adapter = FilmsAdapter { title ->
+
+        val heartListener: (Boolean, String) -> Unit = { isFavourite, filmId ->
+            if (isFavourite) {
+                viewModel.setFavourite(filmId)
+            } else {
+                viewModel.removeFavourite(filmId)
+            }
+        }
+
+        val onElementClick: (String) -> Unit = { title ->
             Toast.makeText(this, title, Toast.LENGTH_SHORT).show()
         }
+
+        val adapter = FilmsAdapter(onElementClick, heartListener)
+
         binding.rvFilmList.apply {
             this.adapter = adapter
             this.layoutManager = layoutManager

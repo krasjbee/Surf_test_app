@@ -18,6 +18,7 @@ class FilmViewHolder(private val binding: CardFilmBinding) : RecyclerView.ViewHo
             tvFilmTitle.text = filmResult.title
             tvFilmDetails.text = filmResult.overview
             tvFilmDate.text = filmResult.releaseDate.toDate()
+            like.isChecked = filmResult.isFavorite
             Glide.with(this@FilmViewHolder.itemView.context)
                 .load(imageUrl)
                 .into(ivFilmPoster)
