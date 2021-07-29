@@ -13,6 +13,7 @@ import com.example.surf_test_app.util.Resource
 import com.example.surf_test_app.util.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,7 +36,8 @@ class MainActivityViewModel @Inject constructor(
         //todo check it
         if (!_filmList.value.isNullOrEmpty()) {
             val filtredList = _filmList.value!!.filter {
-                it.title.contains(query)
+                it.title.lowercase(Locale.getDefault())
+                    .contains(query.lowercase(Locale.getDefault()))
             }
             _filmList.postValue(filtredList)
         }
@@ -79,6 +81,14 @@ class MainActivityViewModel @Inject constructor(
                 is Resource.RequestError -> _state.postValue(State.WrongRequest)
                 is Resource.UnexpectedError -> _state.postValue(State.Error)
             }
+        }
+    }
+
+    fun getFavourites() {
+        viewModelScope.launch {
+            val favouriteList = favouriteRepository.getFavorites().map { it.id }
+            val idsList = _filmList.value?.map { it.id }
+
         }
     }
 }

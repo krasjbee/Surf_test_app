@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
                     viewModel.searchMovies(query ?: "")
                     return true
                 }
-
                 override fun onQueryTextChange(newText: String?): Boolean = false
             }
         )
@@ -146,6 +145,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //Todo favourites integration , favourite button , colors+ ,floating action button , date , text style+, text size , check wrong request+-
+    //Todo favourites integration ,floating action button
 
 }

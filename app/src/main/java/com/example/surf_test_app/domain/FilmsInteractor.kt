@@ -9,29 +9,29 @@ import javax.inject.Inject
 class FilmsInteractor @Inject constructor(val repository: FilmsRepository) {
 
     suspend operator fun invoke(): Resource<DiscoverResponse> {
-        try {
+        return try {
             val response = repository.getFilms()
-            return if (response.code() == 200 && response.body() != null) {
-                Resource.Success<DiscoverResponse>(response.body()!!)
+            if (response.code() == 200 && response.body() != null) {
+                Resource.Success(response.body()!!)
             } else {
-                Resource.RequestError<DiscoverResponse>(response.errorBody().toString())
+                Resource.RequestError(response.errorBody().toString())
             }
         } catch (e: Exception) {
-            return Resource.UnexpectedError<DiscoverResponse>(e.message)
+            Resource.UnexpectedError(e.message)
         }
     }
 
     suspend operator fun invoke(query: String): Resource<SearchResponse> {
-        try {
+        return try {
             val response = repository.searchFilms(query)
-            return if (response.code() == 200 && response.body() != null) {
-                Resource.Success<SearchResponse>(response.body()!!)
+            if (response.code() == 200 && response.body() != null) {
+                Resource.Success(response.body()!!)
             } else {
-                Resource.RequestError<SearchResponse>(response.errorBody().toString())
+                Resource.RequestError(response.errorBody().toString())
             }
 
         } catch (e: Exception) {
-            return Resource.UnexpectedError<SearchResponse>(e.message ?: "Unexpected error")
+            Resource.UnexpectedError(e.message ?: "Unexpected error")
         }
     }
 }
