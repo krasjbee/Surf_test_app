@@ -1,5 +1,6 @@
 package com.example.surf_test_app.presentation
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.surf_test_app.R
 import com.example.surf_test_app.databinding.ActivityMainBinding
+import com.example.surf_test_app.model.FilmResult
 import com.example.surf_test_app.util.State
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,11 +23,21 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainActivityViewModel by viewModels()
+    private var filmsList: List<FilmResult> = emptyList()
+    private lateinit var snackbar: Snackbar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        @SuppressLint("ShowToast")
+        snackbar = Snackbar.make(
+            binding.rvFilmList,
+            "Проверьте ваше соеденение с интернетом и попробуйте еще раз",
+            Snackbar.LENGTH_INDEFINITE
+        )
 
         val layoutManager =
             if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -39,8 +52,10 @@ class MainActivity : AppCompatActivity() {
             this.adapter = adapter
             this.layoutManager = layoutManager
         }
-        viewModel.filmList.observe(this) { filmList ->
-            adapter.submitList(filmList)
+
+        viewModel.filmList.observe(this) { films ->
+            filmsList = films
+            adapter.submitList(filmsList)
         }
 
         viewModel.state.observe(this) { state ->
@@ -79,37 +94,58 @@ class MainActivity : AppCompatActivity() {
         binding.rvFilmList.isVisible = true
         binding.groupRequestError.isVisible = false
         binding.groupError.isVisible = false
+        snackbar.dismiss()
+        binding.pbTopLoading.isVisible = false
 
     }
 
     private fun showWrongRequest() {
-        binding.pbLoading.isVisible = false
-        binding.rvFilmList.isVisible = false
-        binding.groupRequestError.isVisible = true
-        binding.groupError.isVisible = false
-
-        if (binding.svSearch.query.isNotBlank()) {
-            val query = StringBuilder("\"").append(binding.svSearch.query).append("\"").toString()
-            val text = getString(R.string.wrong_request_text, query)
-            binding.tvRequestError.text = text
-        } else {
-            val text = getString(R.string.wrong_request_text, "")
-            binding.tvRequestError.text = text
+        if (filmsList.isEmpty()) {
+            binding.pbLoading.isVisible = false
+            binding.rvFilmList.isVisible = false
+            binding.groupRequestError.isVisible = true
+            binding.groupError.isVisible = false
+            binding.pbTopLoading.isVisible = false
+            snackbar.dismiss()
+            if (binding.svSearch.query.isNotBlank()) {
+                val query =
+                    StringBuilder("\"").append(binding.svSearch.query).append("\"").toString()
+                val text = getString(R.string.wrong_request_text, query)
+                binding.tvRequestError.text = text
+            } else {
+                val text = getString(R.string.wrong_request_text, "")
+                binding.tvRequestError.text = text
+            }
         }
     }
 
     private fun showError() {
-        binding.pbLoading.isVisible = false
-        binding.rvFilmList.isVisible = false
-        binding.groupRequestError.isVisible = false
-        binding.groupError.isVisible = true
+        binding.pbTopLoading.isVisible = false
+        if (filmsList.isEmpty()) {
+            binding.pbLoading.isVisible = false
+            binding.rvFilmList.isVisible = false
+            binding.groupRequestError.isVisible = false
+            binding.groupError.isVisible = true
 
+            snackbar.dismiss()
+        } else {
+            snackbar.show()
+        }
     }
 
     private fun showLoading() {
-        binding.pbLoading.isVisible = true
-        binding.rvFilmList.isVisible = false
-        binding.groupRequestError.isVisible = false
-        binding.groupError.isVisible = false
+        if (filmsList.isEmpty()) {
+            binding.pbLoading.isVisible = true
+            binding.rvFilmList.isVisible = false
+            binding.groupRequestError.isVisible = false
+            binding.groupError.isVisible = false
+            binding.pbTopLoading.isVisible = false
+            snackbar.dismiss()
+        } else {
+            binding.pbTopLoading.isVisible = true
+        }
     }
+
+    //Todo favourites integration , favourite button , colors+ ,floating action button , date , text style+, text size , check wrong request+-
+
 }

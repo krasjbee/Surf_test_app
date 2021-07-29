@@ -1,13 +1,19 @@
 package com.example.surf_test_app.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.surf_test_app.BuildConfig
 import com.example.surf_test_app.api.TMDbAPI
+import com.example.surf_test_app.db.FavouriteDatabase
 import com.example.surf_test_app.domain.FilmsInteractor
+import com.example.surf_test_app.repository.FavoritesRepository
+import com.example.surf_test_app.repository.FavouriteRepositoryImpl
 import com.example.surf_test_app.repository.FilmRepositoryImp
 import com.example.surf_test_app.repository.FilmsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -69,5 +75,15 @@ class AppModule {
 
     @Provides
     fun provideFilmsInteractor(filmRepository: FilmsRepository) = FilmsInteractor(filmRepository)
+
+    @Provides
+    @Singleton
+    fun provideFavouritesDao(@ApplicationContext context: Context) =
+        Room.databaseBuilder(context, FavouriteDatabase::class.java, "favourites.db").build()
+
+    @Provides
+    @Singleton
+    fun provideFavouritesRepository(dao: FavouriteDatabase): FavoritesRepository =
+        FavouriteRepositoryImpl(dao.favouritesDao())
 
 }

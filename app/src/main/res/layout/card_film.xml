@@ -40,6 +40,7 @@
             app:layout_constraintStart_toStartOf="@+id/tv_film_details"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="193dp"
+            android:textAppearance="@style/TitleText"
             tools:text="@tools:sample/lorem/random" />
 
         <TextView
@@ -55,6 +56,7 @@
             app:layout_constraintStart_toEndOf="@id/poster_guideline"
             app:layout_constraintTop_toBottomOf="@id/tv_film_title"
             app:layout_constraintWidth_max="193dp"
+            android:textAppearance="@style/DetailsText"
             tools:text="@tools:sample/lorem/random" />
 
         <ImageView

@@ -8,6 +8,7 @@ import com.example.surf_test_app.domain.FilmsInteractor
 import com.example.surf_test_app.model.DiscoverResponse
 import com.example.surf_test_app.model.FilmResult
 import com.example.surf_test_app.model.SearchResponse
+import com.example.surf_test_app.repository.FavoritesRepository
 import com.example.surf_test_app.util.Resource
 import com.example.surf_test_app.util.State
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(private val filmsInteractor: FilmsInteractor) :
+class MainActivityViewModel @Inject constructor(
+    private val filmsInteractor: FilmsInteractor,
+    private val favouriteRepository: FavoritesRepository
+) :
     ViewModel() {
     private val _filmList: MutableLiveData<List<FilmResult>> = MutableLiveData(emptyList())
     val filmList: LiveData<List<FilmResult>> = _filmList
@@ -28,7 +32,15 @@ class MainActivityViewModel @Inject constructor(private val filmsInteractor: Fil
     }
 
     fun searchMovies(query: String) {
+        //todo check it
+        if (!_filmList.value.isNullOrEmpty()) {
+            val filtredList = _filmList.value!!.filter {
+                it.title.contains(query)
+            }
+            _filmList.postValue(filtredList)
+        }
         _state.postValue(State.Loading)
+
         viewModelScope.launch {
             val listResource = filmsInteractor(query)
             val searchResponse: SearchResponse
@@ -38,6 +50,7 @@ class MainActivityViewModel @Inject constructor(private val filmsInteractor: Fil
                     if (searchResponse.totalResults == 0) {
                         _state.postValue(State.WrongRequest)
                     } else {
+                        //todo check it onw more time
                         _state.postValue(State.Success)
                         _filmList.postValue(searchResponse.filmResults)
                     }
@@ -66,7 +79,6 @@ class MainActivityViewModel @Inject constructor(private val filmsInteractor: Fil
                 is Resource.RequestError -> _state.postValue(State.WrongRequest)
                 is Resource.UnexpectedError -> _state.postValue(State.Error)
             }
-
         }
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TitleText" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">#8B000000</item>
+        <item name="fontWeight">500</item>
+        <!--todo font weight-->
+    </style>
+
+    <style name="DetailsText" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#8B000000</item>
+        <item name="fontWeight">400</item>
+    </style>
+
+    <style name="DateText" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#8B000000</item>
+        <item name="fontWeight">400</item>
+    </style>
+</resources>
